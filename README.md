@@ -1,5 +1,4 @@
-# Dillinge
-## _User authentication with passportjs_
+# _User authentication with passportjs_
 
 User-auth is a authentication coded in JavaScript and use mongoDb
 
