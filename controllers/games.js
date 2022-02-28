@@ -1,12 +1,20 @@
 const Game = require("../models/game");
 const User = require("../models/user");
 const { cloudinary } = require("../cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 
 module.exports.gamesList = async (req, res) => {
     const games = await Game.find({});
     res.send({ games });
 };
+
+
+module.exports.gamesSortByCategories = async (req, res) => {
+    const games = await Game.find({categorie: req.body.categorie});
+    res.send( games );
+};
+
 
 
 
@@ -62,21 +70,13 @@ module.exports.EditGames = (req, res) => {
 
 module.exports.DeleteGames = (req, res) => {
     Game.findByIdAndDelete(req.params.id, (err) => {
+        console.log()
         if (err) {
             res.send(err);
         } else {
 
-            res.send("Game Deleted");
+            res.send("Game Deleted or not found");
         }
     })
 }
 
-module.exports.BuyGame = async (req, res) => {
-    const game = await Game.findById(req.params.id);
-    console.log(req.user._id);
-    const user = await User.findById(req.user._id);
-
-    user.ownedGames.push(game.name);
-    await user.save();
-    console.log('game purchased')
-}

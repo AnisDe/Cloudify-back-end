@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 const async = require("async");
 const crypto = require("crypto");
 const middleware = require("../middleware");
+const Game = require("../models/game");
+
 
 //////SIGN UP
 module.exports.register = async (req, res, next) => {
@@ -133,6 +135,7 @@ module.exports.forgot = (req, res, next) => {
             };
             smtpTransport.sendMail(mailOptions, function (err) {
                 console.log('mail sent');
+                res.send("mail sent");
                 done(err, 'done');
             });
         }
@@ -230,7 +233,20 @@ module.exports.DeleteUser = (req, res) => {
             res.send(err);
         } else {
 
-            res.send("User Deleted");
+            res.send("User Deleted Or not found");
         }
     })
 }
+
+
+
+/*module.exports.BuyGame = async (req, res) => {
+    const game = await Game.findById(req.params.id)
+    if (req.isAuthenticated()) {
+         console.log(req.user);
+    }
+    req.user.ownedGames.push(game);
+
+
+    console.log(game)
+}*/

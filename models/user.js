@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose')
-const gameSchema = require("../models/game");
 
 const UserSchema = new Schema({
     email: {
@@ -30,7 +29,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
-    ownedGames: [gameSchema.name]
+    ownedGames: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Game'
+    }]
 
 
 });

@@ -16,6 +16,8 @@ router.post('/reset/:token', users.PostResetToken);
 
 router.post('/edit/:id', users.editUser);
 
+//router.post('/buyGame/:id', users.BuyGame);
+
 router.get('/verify-email/:token', users.verifyEmail);
 
 router.get('/profile/:id', users.profile);

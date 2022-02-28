@@ -9,9 +9,9 @@ const { isLoggedIn } = require('../middleware');
 
 router.get('/', games.gamesList);
 
-router.post('/', upload.array('image'), games.AddGames);
+router.post('/sortByCategorie', games.gamesSortByCategories);
 
-router.post('/BuyGame/:id', games.BuyGame);
+router.post('/', upload.array('image'), games.AddGames);
 
 router.put('/:id', upload.array('image'), games.EditGames);
 
