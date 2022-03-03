@@ -16,6 +16,9 @@ module.exports.register = async (req, res, next) => {
     if (req.body.adminCode === 'secretcode123') {
         NewUser.isAdmin = true;
     }
+    if(User.findOne({ email: req.body.email } != NewUser.email)){
+        return res.send("email must be unique");
+    }
     await User.register(NewUser, password, async (err, user) => {
         let smtpTransport = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -62,6 +65,12 @@ module.exports.verifyEmail = (req, res) => {
     });
 };
 
+
+
+
+
+
+
 ////////SIGN IN
 module.exports.login = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -81,11 +90,16 @@ module.exports.login = (req, res, next) => {
             }
             // generate a signed son web token with the contents of user object and return it in the response
             const token = jwt.sign(user.toJSON(), 'secret code');
+            
             return res.json({ user, token });
+            
         });
     })(req, res);
 }
-
+module.exports.loginview = (req, res) => {
+  
+    res.render('login');
+};
 /////LOGOUT
 module.exports.logout = (req, res) => {
     req.logout();
@@ -240,13 +254,18 @@ module.exports.DeleteUser = (req, res) => {
 
 
 
-/*module.exports.BuyGame = async (req, res) => {
-    const game = await Game.findById(req.params.id)
-    if (req.isAuthenticated()) {
-         console.log(req.user);
-    }
-    req.user.ownedGames.push(game);
+module.exports.buy = (req, res) => {
+    res.render('button' , { id: req.params.id })
+       
+};
 
+module.exports.BuyGame = async (req, res) => {
+   const game = await (await Game.findById(req.params.id))
+   
+const user = req.user
+    user.ownedGames.push(game._id) 
+    const game1 = await (await Game.findById(user.ownedGames[0]))
+    console.log(game1)
 
-    console.log(game)
-}*/
+    user.save();
+}

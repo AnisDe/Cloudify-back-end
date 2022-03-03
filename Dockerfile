@@ -1,13 +1,15 @@
-FROM node:16
+FROM node:latest
 
 WORKDIR /Users/anisdemni/Desktop/Pi/User-Auth-with-PassportJs
 
 #Install app dependencies
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 RUN npm install
 
 COPY . .
 
-RUN ["npm" ,"start"]
+EXPOSE 3000
+
+CMD ["npm" ,"start"]

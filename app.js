@@ -12,7 +12,8 @@ const userRoutes = require('./routes/users');
 const gameRoutes = require('./routes/games');
 const mongoSanitize = require('express-mongo-sanitize');
 
-const dbUrl = process.env.DB_URL || 'mongodb+srv://endeavor:endeavor@cluster0.wenlh.mongodb.net/cloudify?retryWrites=true&w=majority';
+
+const dbUrl = process.env.DB_URL ;
 mongoose.connect(dbUrl)
 
 const db = mongoose.connection;
@@ -21,6 +22,7 @@ db.once("open", () => {
     console.log("Database Connected");
 })
 const app = express();
+
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 const store = new MongoDBStore({
@@ -46,16 +48,18 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(mongoSanitize());
-app.use(express.urlencoded({ extended: true }));
 //////////////////////////////////////////////
 passport.use(new local_auth(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
 
 app.use('/', userRoutes);
 app.use('/games', gameRoutes);

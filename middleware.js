@@ -3,7 +3,6 @@ const User = require('./models/user');
 module.exports = {
     isLoggedIn: (req, res, next) => {
         if (!req.isAuthenticated()) {
-            req.session.returnTo = req.originalUrl
             console.log('You must be signed in first!');
             return res.send('You must be signed in first!')
         }
