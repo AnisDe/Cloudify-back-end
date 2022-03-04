@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  auth_with_passport:
+    image: auth_with_passport
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    
