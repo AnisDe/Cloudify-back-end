@@ -1,5 +1,4 @@
-version: '3.4'
-
+version: '3.7'
 services:
   auth_with_passport:
     image: auth_with_passport
@@ -7,7 +6,19 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: production
+       NODE_ENV: '{"production"}'
+       MONGO_URI: '{"mongodb://mongodatab:27017/Cloudify"}'
     ports:
       - 3000:3000
-    
+    container_name: nodejs-api
+    links:
+      - mongodatab
+  mongodatab:
+    image: mongo:5
+    ports:
+      - "27017:27017"
+    container_name: mongodatab
+    volumes:
+      - ./db/:/data/db
+volumes:
+  db:

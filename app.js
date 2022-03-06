@@ -14,7 +14,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 
 const dbUrl = process.env.DB_URL ;
-mongoose.connect(dbUrl)
+mongoose.connect("mongodb://mongodatab:27017/Cloudify")
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
