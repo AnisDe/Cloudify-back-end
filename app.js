@@ -7,14 +7,16 @@ const passport = require('passport');
 const local_auth = require('passport-local')
 const session = require('express-session');
 const User = require('./models/user');
-const MongoDBStore = require('connect-mongodb-session')(session)
 const userRoutes = require('./routes/users');
 const gameRoutes = require('./routes/games');
 const mongoSanitize = require('express-mongo-sanitize');
 
 
-const dbUrl = process.env.DB_URL ;
-mongoose.connect("mongodb://mongodatab:27017/Cloudify")
+
+const dbUrl = process.env.DB_URL || 'mongodb+srv://endeavor:endeavor@cluster0.wenlh.mongodb.net/cloudify?retryWrites=true&w=majority';
+mongoose.connect(dbUrl)
+//const dbUrl = process.env.DB_URL ;
+//mongoose.connect("mongodb://mongo:27017/Cloudify")
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -25,18 +27,8 @@ const app = express();
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
-const store = new MongoDBStore({
-    url: dbUrl,
-    secret,
-    touchAfter: 24 * 60 * 60
-});
-
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR", e)
-})
 
 const sessionConfig = {
-    store,
     name: 'session',
     secret,
     resave: false,

@@ -25,10 +25,6 @@ router.get('/profile/:id', users.profile);
 
 router.get('/reset/:token', users.GetResetToken);
 
-router.get('/login', users.loginview);
-
-router.get('/buyGame/:id', isLoggedIn, users.buy);
-
 router.delete('/:id', users.DeleteUser);
 
 module.exports = router;

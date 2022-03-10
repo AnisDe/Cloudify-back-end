@@ -16,18 +16,11 @@ module.exports.register = async (req, res, next) => {
     if (req.body.adminCode === 'secretcode123') {
         NewUser.isAdmin = true;
     }
-    if(User.findOne({ email: req.body.email } != NewUser.email)){
-        return res.send("email must be unique");
-    }
     await User.register(NewUser, password, async (err, user) => {
         let smtpTransport = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD_EMAIL
-            }
+            host: 'maildev',
+            port: 25,
+            ignoreTLS: true
         });
         /////SENDING MAIL VERIFICATION
         let mailOptions = {
@@ -96,10 +89,7 @@ module.exports.login = (req, res, next) => {
         });
     })(req, res);
 }
-module.exports.loginview = (req, res) => {
-  
-    res.render('login');
-};
+
 /////LOGOUT
 module.exports.logout = (req, res) => {
     req.logout();
@@ -131,16 +121,14 @@ module.exports.forgot = (req, res, next) => {
             });
         },
         function (token, user, done) {
-            var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASSWORD_EMAIL
-                }
+            let smtpTransport = nodemailer.createTransport({
+                host: 'maildev',
+                port: 25,
+                ignoreTLS: true
             });
             var mailOptions = {
                 to: user.email,
-                from: process.env.PASSWORD_EMAIL,
+                from: process.env.EMAIL,
                 subject: 'Node.js Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -193,12 +181,10 @@ module.exports.PostResetToken = (req, res) => {
         },
         //////SENDING CONFIRMATION MAIL FOR CHANGING THE PASSWORD 
         function (user, done) {
-            var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'mailforforgot@gmail.com',
-                    pass: 'Forgotpassword1'
-                }
+            let smtpTransport = nodemailer.createTransport({
+                host: 'maildev',
+                port: 25,
+                ignoreTLS: true
             });
             var mailOptions = {
                 to: user.email,
@@ -254,18 +240,17 @@ module.exports.DeleteUser = (req, res) => {
 
 
 
-module.exports.buy = (req, res) => {
-    res.render('button' , { id: req.params.id })
-       
-};
+
 
 module.exports.BuyGame = async (req, res) => {
-   const game = await (await Game.findById(req.params.id))
+   const game =  await Game.findById(req.params.id)
    
 const user = req.user
     user.ownedGames.push(game._id) 
-    const game1 = await (await Game.findById(user.ownedGames[0]))
+    const game1 = (await Game.findById(user.ownedGames[0]))
     console.log(game1)
+    console.log("game added to your library")
+    res.send("game added to your library")
 
     user.save();
 }

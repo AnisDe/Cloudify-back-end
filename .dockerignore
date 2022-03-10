@@ -1,5 +1,6 @@
 **/.classpath
 **/.dockerignore
+**/.dockerignore
 **/.env
 **/.git
 **/.gitignore
@@ -18,6 +19,7 @@
 **/node_modules
 **/npm-debug.log
 **/obj
+**/.vscode
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
