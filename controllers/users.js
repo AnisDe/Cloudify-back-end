@@ -205,15 +205,18 @@ module.exports.PostResetToken = (req, res) => {
 //////MODIFY PROFILE
 module.exports.editUser = async (req, res) => {
     User.findOne({ id: req.params.id }, function (err, Modifieduser) {
-        if (!Modifieduser) {
-            console.log('email invalid.');
-        }
         const { username, password } = req.body;
-        if (username != "") { Modifieduser.username = username; }
-        if (password != "") { Modifieduser.password = password; }
-        Modifieduser.save();
-
-        console.log('Welcome!');
+        console.log(req.body)
+        if (username != ""){ 
+            Modifieduser.username = username; 
+            Modifieduser.save();
+        }
+        if (password != ""){ 
+            Modifieduser.setPassword(password, function (err) {
+                Modifieduser.save(function (err) {
+                });
+            })
+        }
         res.send('user Modified')
     });
 
