@@ -15,7 +15,10 @@ module.exports.gamesSortByCategories = async (req, res) => {
     res.send( games );
 };
 
-
+module.exports.gamesSortByPrice = async (req, res) => {
+    const games = await Game.find({price: req.body.price});
+    res.send( games );
+};
 
 
 module.exports.AddGames = async (req, res) => {
