@@ -12,7 +12,10 @@ const Game = require("../models/game");
 module.exports.register = async (req, res, next) => {
     const { email, username, password } = req.body;
     const NewUser = new User({ email, username, emailToken: crypto.randomBytes(64).toString('hex') });
-
+    if (Object.keys(req.body).length === 0) {
+        console.log("User is empty");
+    }
+    console.log(req.body);
     if (req.body.adminCode === 'secretcode123') {
         NewUser.isAdmin = true;
     }
@@ -250,10 +253,18 @@ module.exports.BuyGame = async (req, res) => {
    
 const user = req.user
     user.ownedGames.push(game._id) 
-    const game1 = (await Game.findById(user.ownedGames[0]))
-    console.log(game1)
+    const gameBuyed = (await Game.findById(user.ownedGames[0]))
+    console.log(gameBuyed)
     console.log("game added to your library")
     res.send("game added to your library")
 
     user.save();
 }
+
+module.exports.listUserGames = async (req,res) => {
+    const user = await User.findOne( {_id: req.params.id} )
+    Game.find().where('_id').equals(user.ownedGames).exec((err , games) => {
+        res.send(games);
+    })
+}
+

@@ -2,6 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose')
 
+const Images = [
+            "https://static.vecteezy.com/ti/vecteur-libre/t2/1993889-belle-femme-latine-avatar-icone-personnage-gratuit-vectoriel.jpg" , 
+            "https://static.vecteezy.com/ti/vecteur-libre/t2/2002403-homme-avec-barbe-avatar-personnage-icone-isole-gratuit-vectoriel.jpg",
+            "https://img.freepik.com/vecteurs-libre/homme-affaires-caractere-avatar-isole_24877-60111.jpg",
+            "https://www.blexar.com/avatar.png"
+        ]
+
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -32,7 +39,11 @@ const UserSchema = new Schema({
     ownedGames: [{
         type: Schema.Types.ObjectId,
         ref: 'Game'
-    }]
+    }],
+    avatar : {
+        type: String,
+        default: Images[Math.floor(Math.random()*4)]
+    }
 
 
 });

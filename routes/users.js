@@ -25,6 +25,8 @@ router.get('/profile/:id', users.profile);
 
 router.get('/reset/:token', users.GetResetToken);
 
+router.get('/listUserGames/:id', users.listUserGames);
+
 router.delete('/:id', users.DeleteUser);
 
 module.exports = router;
