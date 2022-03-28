@@ -4,10 +4,10 @@ User-auth is a authentication coded in JavaScript and use mongoDb
 
 ## Features
 
-- sign in and sign up  and logout requests using local passport strategy with email verification
+- sign in , sign up  and logout requests using local passport strategy with email verification
 - the possibility to update your informations that you stored in the database
 - If you forget your password just send a forget password request 
--Deleting your account
+- Deleting your account
 
 ## Tech
 
