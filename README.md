@@ -39,7 +39,7 @@ These are few steps you should do before start testing the api :
 1. open postman 
 2. fork (import) these [requests]
 
-##### Register
+#### Register
 To test registration we have to send a POST request to localhost:3000/register
 enter the following information : 
  - username : USERNAME
@@ -55,7 +55,7 @@ If you don't send in the field adminCode "secretcode123" it wil save isAdmin in 
 
 ![alt text](https://res.cloudinary.com/cloudperso/image/upload/v1646041350/Capture_d_%C3%A9cran_2022-02-28_%C3%A0_10.41.45_AM_e6wn8m.png)
 
-##### Login
+#### Login
 
 To test login we have to send a POST request to localhost:3000/login
 enter the following information : 
@@ -66,7 +66,7 @@ It will return a .json with the user informations like this :
 
 ![alt text](https://res.cloudinary.com/cloudperso/image/upload/v1648432206/Capture_d_%C3%A9cran_2022-03-28_%C3%A0_2.49.32_AM_cbsrlg.png)
 
-##### Forget Password 
+#### Forget Password 
 
 To test login we have to send a POST request to localhost:3000/forgot
 enter your email : 
@@ -76,7 +76,7 @@ It wil simply send an email with a link that will redirect you to a form a enter
 
 ![alt text](https://res.cloudinary.com/cloudperso/image/upload/v1648432461/Capture_d_%C3%A9cran_2022-03-28_%C3%A0_2.54.09_AM_n8zegx.png)
 
-##### Update User
+#### Update User
 
 To test editing profile we have to send a POST request to localhost:3000/edit/:id
 enter the following information :
@@ -86,12 +86,12 @@ enter the following information :
 
 this will update the non-empty field 
 
-##### Delete User
+#### Delete User
 
 To test deleting profile we have to send a DELETE request to localhost:3000/:id
 and Don't forget to pass in the id of the user
 
-##### Show a profile
+#### Show a profile
 
 To test showing a specific profile we have to send a GET request to localhost:3000/profile/:id
 Don't forget to pass in the id of that specific user.
