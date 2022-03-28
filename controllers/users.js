@@ -9,6 +9,7 @@ const Game = require("../models/game");
 
 
 //////SIGN UP
+
 module.exports.register = async (req, res, next) => {
     const { email, username, password } = req.body;
     const NewUser = new User({ email, username, emailToken: crypto.randomBytes(64).toString('hex') });
@@ -68,6 +69,7 @@ module.exports.verifyEmail = (req, res) => {
 
 
 ////////SIGN IN
+
 module.exports.login = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err || !user) {
@@ -94,6 +96,7 @@ module.exports.login = (req, res, next) => {
 }
 
 /////LOGOUT
+
 module.exports.logout = (req, res) => {
     req.logout();
     res.send('BYY!!')
@@ -101,6 +104,7 @@ module.exports.logout = (req, res) => {
 }
 
 //////FORGET PASSWORD
+
 module.exports.forgot = (req, res, next) => {
     async.waterfall([
         function (done) {
@@ -206,6 +210,7 @@ module.exports.PostResetToken = (req, res) => {
     });
 };
 //////MODIFY PROFILE
+
 module.exports.editUser = async (req, res) => {
     User.findOne({ id: req.params.id }, function (err, Modifieduser) {
         const { username, password } = req.body;
@@ -225,6 +230,9 @@ module.exports.editUser = async (req, res) => {
 
 };
 
+//////SHOW PROFILE
+
+
 module.exports.profile = (req, res) => {
     User.findOne({ _id: req.params.id }, function (err, FoundUser) {
         if (err) { return err }
@@ -232,6 +240,7 @@ module.exports.profile = (req, res) => {
     })
 }
 
+//////DELETE PROFILE
 
 module.exports.DeleteUser = (req, res) => {
     User.findByIdAndDelete(req.params.id, (err) => {
@@ -247,6 +256,7 @@ module.exports.DeleteUser = (req, res) => {
 
 
 
+//////BUY A GAME 
 
 module.exports.BuyGame = async (req, res) => {
    const game =  await Game.findById(req.params.id)
@@ -260,6 +270,7 @@ const user = req.user
 
     user.save();
 }
+//////LIST USER GAMES PROFILE
 
 module.exports.listUserGames = async (req,res) => {
     const user = await User.findOne( {_id: req.params.id} )
