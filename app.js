@@ -40,7 +40,8 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(session(sessionConfig));
 app.use(passport.initialize());

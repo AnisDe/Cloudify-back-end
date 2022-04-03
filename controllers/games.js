@@ -83,3 +83,14 @@ module.exports.DeleteGames = (req, res) => {
     })
 }
 
+
+module.exports.listGameImages = async (req,res) => {
+    const games = await Game.findOne( {_id: req.params.id} )
+    urls = {}
+    for (let i = 0; i < Object.keys(games.images).length; i++) {
+        urls[i]=games.images[i].url
+        
+    }
+    res.send(urls)
+    
+}

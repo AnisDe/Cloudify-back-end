@@ -13,11 +13,14 @@ router.get('/sortByCategorie', games.gamesSortByCategories);
 
 router.get('/sortByPrice', games.gamesSortByPrice);
 
+router.get('/listGameImages/:id', games.listGameImages);
+
 router.post('/', upload.array('image'), games.AddGames);
 
 router.put('/:id', upload.array('image'), games.EditGames);
 
 router.delete('/:id', games.DeleteGames);
+
 
 
 module.exports = router;

@@ -23,7 +23,7 @@ module.exports.register = async (req, res, next) => {
     await User.register(NewUser, password, async (err, user) => {
         let smtpTransport = nodemailer.createTransport({
             host: 'maildev',
-            port: 25,
+            port: 1025,
             ignoreTLS: true
         });
         /////SENDING MAIL VERIFICATION
@@ -130,7 +130,7 @@ module.exports.forgot = (req, res, next) => {
         function (token, user, done) {
             let smtpTransport = nodemailer.createTransport({
                 host: 'maildev',
-                port: 25,
+                port: 1025,
                 ignoreTLS: true
             });
             var mailOptions = {
@@ -190,7 +190,7 @@ module.exports.PostResetToken = (req, res) => {
         function (user, done) {
             let smtpTransport = nodemailer.createTransport({
                 host: 'maildev',
-                port: 25,
+                port: 1025,
                 ignoreTLS: true
             });
             var mailOptions = {
