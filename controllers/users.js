@@ -6,6 +6,7 @@ const async = require("async");
 const crypto = require("crypto");
 const middleware = require("../middleware");
 const Game = require("../models/game");
+const { Console } = require('console');
 
 
 //////SIGN UP
@@ -212,22 +213,19 @@ module.exports.PostResetToken = (req, res) => {
 //////MODIFY PROFILE
 
 module.exports.editUser = async (req, res) => {
-    User.findOne({ id: req.params.id }, function (err, Modifieduser) {
-        const { username, password } = req.body;
-        console.log(req.body)
-        if (username != ""){ 
-            Modifieduser.username = username; 
-            Modifieduser.save();
-        }
-        if (password != ""){ 
-            Modifieduser.setPassword(password, function (err) {
-                Modifieduser.save(function (err) {
-                });
-            })
-        }
-        res.send('user Modified')
-    });
+    let user = await User.findById( req.params.id )
+       console.log(user)
+    
+       if (req.body.username === ''){ 
+        res.send("username is empty")
+        return "user is empty"
+    }
 
+    if (req.body.username != ''){ 
+        user.username = req.body.username; 
+        user.save();
+    }
+    res.send("user modified")
 };
 
 //////SHOW PROFILE

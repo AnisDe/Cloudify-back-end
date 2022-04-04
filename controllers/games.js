@@ -20,6 +20,17 @@ module.exports.gamesSortByPrice = async (req, res) => {
     res.send( games );
 };
 
+module.exports.FreeGames = async (req, res) => {
+    const games = await Game.find({price: 0});
+    res.send( games );
+};
+
+module.exports.PaidGames = async (req, res) => {
+
+    const games = await Game.find({ price: { $ne: 0 } });
+    res.send( games );
+};
+
 
 module.exports.AddGames = async (req, res) => {
     let name = req.body.name;

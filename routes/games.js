@@ -21,6 +21,10 @@ router.put('/:id', upload.array('image'), games.EditGames);
 
 router.delete('/:id', games.DeleteGames);
 
+router.get('/freeGames', games.FreeGames);
+
+router.get('/paidGames', games.PaidGames);
+
 
 
 module.exports = router;
