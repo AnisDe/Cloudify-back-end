@@ -80,7 +80,9 @@ module.exports.login = (req, res, next) => {
         }
         if (err || user.isVerified == false) {
             return res.status(400).json({
-                message: 'You have to verify your email'
+                
+                message: 'You have to verify your email',
+                user
             });
         }
         req.login(user, { session: false }, (err) => {
@@ -218,7 +220,7 @@ module.exports.editUser = async (req, res) => {
        console.log(user)
     
        if (req.body.username === ''){ 
-        res.send("username is empty")
+        res.json("username is empty")
         return "user is empty"
     }
 
@@ -226,7 +228,8 @@ module.exports.editUser = async (req, res) => {
         user.username = req.body.username; 
         user.save();
     }
-    res.send("user modified")
+    console.log("profile updated")
+    return res.json({user})
 };
 
 //////SHOW PROFILE
@@ -258,17 +261,17 @@ module.exports.DeleteUser = (req, res) => {
 //////BUY A GAME 
 
 module.exports.BuyGame = async (req, res) => {
-   const game =  await Game.findById(req.params.id)
-   
-const user = req.user
-    user.ownedGames.push(game._id) 
-    const gameBuyed = (await Game.findById(user.ownedGames[0]))
-    console.log(gameBuyed)
-    console.log("game added to your library")
-    res.send("game added to your library")
-
-    user.save();
-}
+    const game =  await Game.findById(req.params.idGame)
+    const user =  await User.findById(req.params.idUser)
+ //const user = req.user
+     user.ownedGames.push(game._id) 
+     const gameBuyed = (await Game.findById(user.ownedGames[0]))
+     console.log(gameBuyed)
+     console.log("game added to your library")
+     res.send("game added to your library")
+ 
+     user.save();
+ }
 //////LIST USER GAMES PROFILE
 
 module.exports.listUserGames = async (req,res) => {
@@ -278,3 +281,10 @@ module.exports.listUserGames = async (req,res) => {
     })
 }
 
+module.exports.addSolde = async (req,res) => {
+    const user =  await User.findById(req.params.id)
+    
+        user.solde = req.body.solde; 
+        user.save();
+        console.log("solde updated")
+    }

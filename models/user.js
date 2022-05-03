@@ -36,6 +36,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    solde: {
+        type: Number,
+        required: false
+    },
     ownedGames: [{
         type: Schema.Types.ObjectId,
         ref: 'Game'

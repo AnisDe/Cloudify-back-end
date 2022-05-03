@@ -13,11 +13,13 @@ router.post('/logout', users.logout);
 
 router.post('/forgot', users.forgot);
 
+router.post('/addSolde/:id', users.addSolde);
+
 router.post('/reset/:token', users.PostResetToken);
 
 router.post('/edit/:id', users.editUser);
 
-router.post('/buyGame/:id', users.BuyGame);
+router.post('/buyGame/:idUser/:idGame', users.BuyGame);
 
 router.get('/verify-email/:token', users.verifyEmail);
 
