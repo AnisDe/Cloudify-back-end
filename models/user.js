@@ -38,7 +38,8 @@ const UserSchema = new Schema({
     },
     solde: {
         type: Number,
-        required: false
+        required: false,
+        default:0
     },
     ownedGames: [{
         type: Schema.Types.ObjectId,

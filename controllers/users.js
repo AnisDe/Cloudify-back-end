@@ -264,13 +264,21 @@ module.exports.BuyGame = async (req, res) => {
     const game =  await Game.findById(req.params.idGame)
     const user =  await User.findById(req.params.idUser)
  //const user = req.user
-     user.ownedGames.push(game._id) 
-     const gameBuyed = (await Game.findById(user.ownedGames[0]))
-     console.log(gameBuyed)
-     console.log("game added to your library")
-     res.send("game added to your library")
+     if(user.solde >= game.price) {
+        user.ownedGames.push(game._id) 
+        const gameBuyed = (await Game.findById(user.ownedGames[0]))
+        console.log(gameBuyed)
+        console.log("game added to your library")
+        res.send("game added to your library")
+        user.solde = user.solde-game.price
+        user.save();
+     }
+     else{
+        console.log("solde insuffisant")
+        res.send("solde insuffisant")
+     }     
  
-     user.save();
+    
  }
 //////LIST USER GAMES PROFILE
 
@@ -284,7 +292,8 @@ module.exports.listUserGames = async (req,res) => {
 module.exports.addSolde = async (req,res) => {
     const user =  await User.findById(req.params.id)
     
-        user.solde = req.body.solde; 
+        user.solde =  user.solde+parseInt(req.body.solde); 
         user.save();
         console.log("solde updated")
+        res.send("solde updated")
     }
