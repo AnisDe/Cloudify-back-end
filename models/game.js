@@ -26,10 +26,11 @@ const GameSchema = new Schema({
         type: Number,
         required: true
     },
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "comment"
-    }]
+    link: {
+        type: String,
+        required: true,
+        default:""
+    }
 
 });
 

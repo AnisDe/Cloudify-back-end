@@ -38,12 +38,15 @@ module.exports.AddGames = async (req, res) => {
     let tags = req.body.tags;
     let description = req.body.description;
     let price = req.body.price;
+    let link = req.body.link;
     let newgame = {
         name: name,
         categorie: categorie,
         tags: tags,
         description: description,
-        price: price
+        price: price,
+        link: link
+
 
     }
     const game = new Game(newgame);
